@@ -11,7 +11,7 @@ const Login = ({loginToggle}) => {
     e.preventDefault();
     const user = { username, password };
     const abortCont = new AbortController();
-    fetch('http://127.0.0.1:8000/api-token-auth/', {
+    fetch('./api-token-auth/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

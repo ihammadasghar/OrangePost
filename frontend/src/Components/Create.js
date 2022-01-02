@@ -16,17 +16,18 @@ const Create = ({isLoggedIn}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let form_data = new FormData();
-    form_data.append('image', image, image.name);
+    form_data.append('image', image);
     form_data.append('title', title);
     form_data.append('description', description);
     form_data.append('author', author);
-    let url = 'http://127.0.0.1:8000/blogs/';
-    axios.post(url, form_data, {
-      headers: {
-        'content-type': 'multipart/form-data',
-        Authorization: `Token ${localStorage.getItem('token')}`
+    let url = './blogs/';
+    await axios(
+      {
+        method: 'post',
+        url: url,
+        data: form_data
       }
-    })
+    )
         .then(res => {
           console.log(res.data);
         })
@@ -35,14 +36,18 @@ const Create = ({isLoggedIn}) => {
   };
   // const handleSubmit = (e) => {
   //   e.preventDefault();
-  //   const blog = { title, description, author, image };
+  //   let form_data = new FormData();
+  //   form_data.append('image', image, image.name);
+  //   form_data.append('title', title);
+  //   form_data.append('description', description);
+  //   form_data.append('author', author);
 
-  //   fetch('http://127.0.0.1:8000/blogs/', {
+  //   fetch('./blogs/', {
   //     method: 'POST',
   //     headers: { "Content-Type": "application/json",
   //     Authorization: `Token ${localStorage.getItem('token')}`
   //   },
-  //     body: JSON.stringify(blog)
+  //     body: form_data
   //   }).then(() => {
   //     // history.go(-1);
   //     history.push('/');

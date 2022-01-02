@@ -11,7 +11,7 @@ const Comment = ({blog_id, reply_to}) => {
     e.preventDefault();
     const comment = { text, author, blog, reply_to };
 
-    fetch('http://127.0.0.1:8000/comments/', {
+    fetch('./comments/', {
       method: 'POST',
       headers: { "Content-Type": "application/json",
       Authorization: `Token ${localStorage.getItem('token')}`

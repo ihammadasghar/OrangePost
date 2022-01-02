@@ -20,7 +20,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=70)
     description = models.CharField(max_length=300)
     content = models.CharField(max_length=1600, default="none")
-    image = models.ImageField(blank=True ,null=True)
+    image = models.ImageField(blank=True, null=True)
     author = models.ForeignKey(User, related_name='blogs', on_delete=models.CASCADE)
     likes = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)

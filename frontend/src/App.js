@@ -26,7 +26,7 @@ class App extends Component {
   }
   getBlogs=()=>{
     axios
-    .get('http://127.0.0.1:8000/blogs/' ,{
+    .get('./blogs/' ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -36,7 +36,7 @@ class App extends Component {
   }
   getComments=()=>{
     axios
-    .get('http://127.0.0.1:8000/comments/' ,{
+    .get('./comments/' ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -47,7 +47,7 @@ class App extends Component {
 
   getProfiles=()=>{
     axios
-    .get('http://127.0.0.1:8000/profiles/'  ,{
+    .get('./profiles/'  ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
