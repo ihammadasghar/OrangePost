@@ -12,47 +12,28 @@ const Create = ({isLoggedIn}) => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const author = localStorage.getItem('user_id');
+
   
   const handleSubmit = (e) => {
     e.preventDefault();
     let form_data = new FormData();
-    form_data.append('image', image);
+    form_data.append('image', image, image.name);
     form_data.append('title', title);
     form_data.append('description', description);
     form_data.append('author', author);
-    let url = './blogs/';
-    await axios(
-      {
-        method: 'post',
-        url: url,
-        data: form_data
-      }
-    )
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => console.log(err));
-        window.location.reload();
-  };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   let form_data = new FormData();
-  //   form_data.append('image', image, image.name);
-  //   form_data.append('title', title);
-  //   form_data.append('description', description);
-  //   form_data.append('author', author);
 
-  //   fetch('./blogs/', {
-  //     method: 'POST',
-  //     headers: { "Content-Type": "application/json",
-  //     Authorization: `Token ${localStorage.getItem('token')}`
-  //   },
-  //     body: form_data
-  //   }).then(() => {
-  //     // history.go(-1);
-  //     history.push('/');
-  //   })
-  // }
+    fetch('./blogs/', {
+      method: 'POST',
+      headers: {
+      Authorization: `Token ${localStorage.getItem('token')}`
+    },
+      body: form_data
+    }).then(res => {
+              console.log(res.data);
+            })
+    .catch(err => console.log(err));
+    window.location.reload();
+  }
 
   return (
     <div className="create">
