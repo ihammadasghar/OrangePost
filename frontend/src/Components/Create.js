@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
 
 const Create = ({isLoggedIn}) => {
   const history = useHistory();
@@ -13,7 +12,7 @@ const Create = ({isLoggedIn}) => {
   const [imageUrl, setImageUrl] = useState(null);
   const author = localStorage.getItem('user_id');
 
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let form_data = new FormData();
@@ -22,7 +21,7 @@ const Create = ({isLoggedIn}) => {
     form_data.append('description', description);
     form_data.append('author', author);
 
-    fetch('./blogs/', {
+    fetch('./api/blogs/', {
       method: 'POST',
       headers: {
       Authorization: `Token ${localStorage.getItem('token')}`

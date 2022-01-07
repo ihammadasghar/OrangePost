@@ -26,7 +26,7 @@ class App extends Component {
   }
   getBlogs=()=>{
     axios
-    .get('./blogs/' ,{
+    .get('./api/blogs/' ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -36,7 +36,7 @@ class App extends Component {
   }
   getComments=()=>{
     axios
-    .get('./comments/' ,{
+    .get('./api/comments/' ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -47,7 +47,7 @@ class App extends Component {
 
   getProfiles=()=>{
     axios
-    .get('./profiles/'  ,{
+    .get('./api/profiles/'  ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }

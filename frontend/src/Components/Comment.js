@@ -18,8 +18,7 @@ const Comment = ({blog_id, reply_to}) => {
     },
       body: JSON.stringify(comment)
     }).then(() => {
-      // history.go(-1);
-      window.location.reload();
+      history.push("/");
     })
   }
 

@@ -16,7 +16,7 @@ const CommentReplies = ({isLoggedIn, commentsData}) => {
     }
 
   const handleClick = () => {
-    fetch('./comments/' + comment.id, {
+    fetch('./api/comments/' + comment.id, {
       method: 'DELETE'
     }).then(() => {
       history.push('/');
