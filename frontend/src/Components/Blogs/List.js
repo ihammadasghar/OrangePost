@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import defaultPicture from './Static/defaultPicture.png'
+import defaultPicture from '../Static/defaultPicture.png'
 
-const BlogList = ({blogs}) => {
+const List = ({blogs}) => {
 
     return(
         <div className="blog-list">
@@ -42,4 +42,4 @@ const BlogList = ({blogs}) => {
         </div>
     );
 }
-export default BlogList;
+export default List;

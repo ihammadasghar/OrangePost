@@ -1,8 +1,8 @@
 import { useParams, useHistory, Redirect } from "react-router-dom";
-import CommentList from './CommentList';
-import Comment from './Comment';
+import CommentList from './List';
+import CreateComment from './Create';
 
-const CommentReplies = ({isLoggedIn, commentsData}) => {
+const Replies = ({isLoggedIn, commentsData}) => {
     const history = useHistory();
     const { id } = useParams();
     if(!isLoggedIn){
@@ -15,8 +15,8 @@ const CommentReplies = ({isLoggedIn, commentsData}) => {
         blog_id = comment.blog;
     }
 
-  const handleClick = () => {
-    fetch('./api/comments/' + comment.id, {
+  const deleteComment= () => {
+    fetch('/api/comments/' + comment.id, {
       method: 'DELETE'
     }).then(() => {
       history.push('/');
@@ -36,11 +36,11 @@ const CommentReplies = ({isLoggedIn, commentsData}) => {
                 </p>
                 </div>
             )}
-            {isLoggedIn  && <Comment blog_id={blog_id} reply_to={id}/>}
+            {isLoggedIn  && <CreateComment blog_id={blog_id} reply_to={id}/>}
             {commentsData && <CommentList comments={commentReplies} title="Replies" />}
             
                     
         </div>
     );
 }
-export default CommentReplies;
+export default Replies;

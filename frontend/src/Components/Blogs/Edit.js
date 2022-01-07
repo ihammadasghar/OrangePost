@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-const Create = ({isLoggedIn}) => {
+const Edit = ({isLoggedIn}) => {
   const history = useHistory();
   if(!isLoggedIn){
     history.push('/login');
@@ -21,7 +21,7 @@ const Create = ({isLoggedIn}) => {
     form_data.append('description', description);
     form_data.append('author', author);
 
-    fetch('./api/blogs/', {
+    fetch('/api/blogs/', {
       method: 'POST',
       headers: {
       Authorization: `Token ${localStorage.getItem('token')}`
@@ -77,4 +77,4 @@ const Create = ({isLoggedIn}) => {
   );
 }
  
-export default Create;
+export default Edit;

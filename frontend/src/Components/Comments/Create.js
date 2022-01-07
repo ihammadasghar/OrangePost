@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-const Comment = ({blog_id, reply_to}) => {
+const Create = ({blog_id, reply_to}) => {
   const [text, setText] = useState('');
   const author = localStorage.getItem('user_id');
   const history = useHistory();
@@ -11,14 +11,14 @@ const Comment = ({blog_id, reply_to}) => {
     e.preventDefault();
     const comment = { text, author, blog, reply_to };
 
-    fetch('./comments/', {
+    fetch('/api/comments/', {
       method: 'POST',
       headers: { "Content-Type": "application/json",
       Authorization: `Token ${localStorage.getItem('token')}`
     },
       body: JSON.stringify(comment)
     }).then(() => {
-      history.push("/");
+      history.go(-1);
     })
   }
 
@@ -37,4 +37,4 @@ const Comment = ({blog_id, reply_to}) => {
   );
 }
  
-export default Comment;
+export default Create;

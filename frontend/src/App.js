@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
-import CommentReplies from './Components/CommentReplies';
-import Create from './Components/Create';
+import CommentReplies from './Components/Comments/Replies';
+import CreateBlog from './Components/Blogs/Create';
 import axios from "axios";
 import NotFound from './Components/NotFound';
-import Login from './Components/Login';
+import Login from './Components/Accounts/Login';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import BlogDetails from './Components/BlogDetails';
+import BlogDetails from './Components/Blogs/Details';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class App extends Component {
   }
   getBlogs=()=>{
     axios
-    .get('./api/blogs/' ,{
+    .get('/api/blogs/' ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -36,7 +36,7 @@ class App extends Component {
   }
   getComments=()=>{
     axios
-    .get('./api/comments/' ,{
+    .get('/api/comments/' ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -47,7 +47,7 @@ class App extends Component {
 
   getProfiles=()=>{
     axios
-    .get('./api/profiles/'  ,{
+    .get('/api/profiles/'  ,{
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`
       }
@@ -96,8 +96,8 @@ class App extends Component {
               <Route exact path="/login">
                 <Login loginToggle={this.loginToggle}/>
               </Route>
-              <Route exact path="/create">
-                <Create isLoggedIn={this.state.isLoggedIn}  profilesData={this.state.profilesData}/>
+              <Route exact path="/blogs/create">
+                <CreateBlog isLoggedIn={this.state.isLoggedIn}  profilesData={this.state.profilesData}/>
               </Route>
               <Route exact path="/blogs/:id">
                 <BlogDetails isLoggedIn={this.state.isLoggedIn} blogsData={this.state.blogsData} commentsData={this.state.commentsData}  profilesData={this.state.profilesData}/>
