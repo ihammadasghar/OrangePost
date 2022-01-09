@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import Navbar from './Components/Navbar';
-import Home from './Components/Home';
-import CommentReplies from './Components/Comments/Replies';
-import CreateBlog from './Components/Blogs/Create';
+import Navbar from './Navbar';
+import Home from './Home';
+import CommentReplies from './Comments/Replies';
+import CreateBlog from './Blogs/Create';
 import axios from "axios";
-import NotFound from './Components/NotFound';
-import Login from './Components/Accounts/Login';
+import NotFound from './NotFound';
+import Login from './Accounts/Login';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import BlogDetails from './Components/Blogs/Details';
+import BlogDetails from './Blogs/Details';
+import EditBlog from './Blogs/Edit'
 
 class App extends Component {
   constructor(props) {
@@ -98,6 +99,9 @@ class App extends Component {
               </Route>
               <Route exact path="/blogs/create">
                 <CreateBlog isLoggedIn={this.state.isLoggedIn}  profilesData={this.state.profilesData}/>
+              </Route>
+              <Route exact path="/blogs/Edit/:id">
+                <EditBlog isLoggedIn={this.state.isLoggedIn}  blogsData={this.state.blogsData}/>
               </Route>
               <Route exact path="/blogs/:id">
                 <BlogDetails isLoggedIn={this.state.isLoggedIn} blogsData={this.state.blogsData} commentsData={this.state.commentsData}  profilesData={this.state.profilesData}/>

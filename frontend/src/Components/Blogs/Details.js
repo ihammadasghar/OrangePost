@@ -2,6 +2,7 @@ import { Redirect, useHistory, useParams } from "react-router-dom";
 import CommentList from '../Comments/List';
 import CreateComment from '../Comments/Create';
 import defaultPicture from '../Static/defaultPicture.png'
+import { Link } from 'react-router-dom';
 
 const Details = ({isLoggedIn, blogsData, commentsData}) => {
   const history = useHistory();
@@ -24,7 +25,9 @@ const Details = ({isLoggedIn, blogsData, commentsData}) => {
   const deleteBlog = () => {
     fetch('/api/blogs/' + blog.id, {
       method: 'DELETE',
-      headers: { Authorization: `Token ${localStorage.getItem('token')}`})
+      headers: { Authorization: `Token ${localStorage.getItem('token')}`}
+      }
+      )
       .then(() => {
       history.push('/');
     }) 
@@ -50,7 +53,7 @@ const Details = ({isLoggedIn, blogsData, commentsData}) => {
                             <h2>{ blog.title } </h2>
                             <p>Written By { blog.author }</p>
                             {isAuthor && <button onClick={deleteBlog}>Delete</button>}
-                            {isAuthor && <button onClick={deleteBlog}>Edit</button>}
+                            {isAuthor && <Link to={`/blogs/Edit/${blog.id}`}>Edit</Link>}
                         </td>
                     </tr>
                 </table>

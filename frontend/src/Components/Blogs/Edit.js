@@ -1,15 +1,27 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 
-const Edit = ({isLoggedIn}) => {
+const Edit = ({isLoggedIn, blogsData}) => {
   const history = useHistory();
+  const { id } = useParams();
+
   if(!isLoggedIn){
     history.push('/login');
   }
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  var blog = null;
+  var isAuthor =false;
+  if(blogsData != null){
+    blog = blogsData.find((b)=>(b.id == id));
+    if(localStorage.getItem('username') == blog.author){
+      isAuthor = true;
+    }else{
+      isAuthor = false;
+    }
+  }
+  const [title, setTitle] = useState(blog.title);
+  const [description, setDescription] = useState(blog.description);
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(blog.image);
   const author = localStorage.getItem('user_id');
 
 
@@ -20,9 +32,9 @@ const Edit = ({isLoggedIn}) => {
     form_data.append('title', title);
     form_data.append('description', description);
     form_data.append('author', author);
-
+    
     fetch('/api/blogs/', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
       Authorization: `Token ${localStorage.getItem('token')}`
     },
@@ -31,7 +43,7 @@ const Edit = ({isLoggedIn}) => {
               console.log(res.data);
             })
     .catch(err => console.log(err));
-    window.location.reload();
+    history.go(-1)
   }
 
   return (
@@ -70,8 +82,8 @@ const Edit = ({isLoggedIn}) => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
-              {image!=null && <img src={imageUrl}/>}
-        <button>Post</button>
+              {imageUrl!=null && <img src={imageUrl}/>}
+        <button type="submit">Update</button>
       </form>
     </div>
   );
