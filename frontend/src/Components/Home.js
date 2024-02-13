@@ -1,10 +1,10 @@
-import BlogsList from './BlogList';
-import Create from './Create';
+import BlogsList from './Blogs/List';
+import CreateBlog from './Blogs/Create';
 
 const Home = ({isLoggedIn, blogsData, profileData}) => {
     return(
         <div className="home">
-            {isLoggedIn && <Create isLoggedIn={isLoggedIn} />}
+            {isLoggedIn && <CreateBlog isLoggedIn={isLoggedIn} />}
             {blogsData && <BlogsList blogs={blogsData} profileData={profileData} />}
         </div>
     );

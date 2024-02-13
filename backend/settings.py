@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'blogs.apps.BlogsConfig'
+    'blogs.apps.BlogsConfig',
+    'frontend.apps.FrontendConfig',
 ]
 
 MIDDLEWARE = [
@@ -152,8 +153,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':(
                 'rest_framework.permissions.IsAuthenticated',
     ),
-    # 'DEFAULT_PARSER_CLASSES': [
-    #     'rest_framework.parsers.JSONParser'
-    # ],
 
 }

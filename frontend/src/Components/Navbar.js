@@ -6,7 +6,7 @@ const Navbar = ({isLoggedIn, logout}) => {
             <h1>OrangePost</h1>
             <div className="links">
                 <Link to="/">Home</Link>
-                <Link to="/create">New Blog</Link>
+                <Link to="/blogs/create">New Blog</Link>
                 {isLoggedIn && <Link to="/profile">{localStorage.getItem('username')}</Link>}
                 {isLoggedIn && <button className="logout" onClick={logout}>Logout</button>}
                 {!isLoggedIn && <Link to="/login">Login</Link>}

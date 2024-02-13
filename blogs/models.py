@@ -18,11 +18,9 @@ class Profile(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=70)
-    description = models.CharField(max_length=300)
-    content = models.CharField(max_length=1600, default="none")
-    image = models.ImageField(blank=True, null=True)
+    description = models.CharField(max_length=500)
+    image = models.ImageField(upload_to='uploads/images', blank=False, null=False)
     author = models.ForeignKey(User, related_name='blogs', on_delete=models.CASCADE)
-    likes = models.PositiveIntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title
@@ -31,7 +29,6 @@ class Blog(models.Model):
 
 class Comment(models.Model):
     text = models.CharField(max_length=400)
-    likes = models.PositiveIntegerField(default=0)
     author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     blog = models.ForeignKey(Blog, related_name='comments', on_delete=models.CASCADE)
     reply_to = models.ForeignKey('self',  default=None, blank=True ,null=True,  on_delete=models.SET_NULL)

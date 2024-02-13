@@ -1,4 +1,3 @@
-from django.contrib.auth import models
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Blog, Comment, Profile
@@ -9,7 +8,7 @@ class BlogSerializer(serializers.HyperlinkedModelSerializer):
     comments = serializers.HyperlinkedRelatedField(many=True, view_name='comment-detail', read_only=True)
     class Meta:
         model = Blog
-        fields = ['id', 'title', 'description','content', 'author','author_profile', 'image', 'comments', 'created']
+        fields = ['id', 'title', 'description', 'author','author_profile', 'image', 'comments', 'created']
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
