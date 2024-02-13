@@ -31,7 +31,7 @@ const Create = ({isLoggedIn}) => {
               console.log(res.data);
             })
     .catch(err => console.log(err));
-    history.push("/")
+    history.push("/");
   }
 
   return (

@@ -1,54 +1,64 @@
-import { useState } from "react";
-import { Redirect, useHistory, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import axios from "axios";
 
-const Edit = ({isLoggedIn, blogsData}) => {
+const Edit = ({isLoggedIn}) => {
   const history = useHistory();
   const { id } = useParams();
 
   if(!isLoggedIn){
     history.push('/login');
   }
-  var blog = null;
-  var isAuthor =false;
-  if(blogsData != null){
-    blog = blogsData.find((b)=>(b.id == id));
-    if(localStorage.getItem('username') == blog.author){
-      isAuthor = true;
-    }else{
-      isAuthor = false;
-    }
-  }
-  const [title, setTitle] = useState(blog.title);
-  const [description, setDescription] = useState(blog.description);
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(blog.image);
+  const [imageUrl, setImageUrl] = useState(null);
   const author = localStorage.getItem('user_id');
 
+  useEffect(()=>{
+    getBlog();
+  }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  let getBlog = async() => {
+    const { data } = await axios
+    .get(`/api/blogs/${id}` ,{
+      headers: {
+        Authorization: `JWT ${localStorage.getItem('token')}`
+      }
+    })
+    .catch((err) => console.log(err));
+    console.log(data);
+    setTitle(data.title);
+    setImage(data.image);
+    setImageUrl(data.image);
+    setDescription(data.description);
+  }
+
+  const updateBlog = async() => {
     let form_data = new FormData();
-    form_data.append('image', image, image.name);
     form_data.append('title', title);
     form_data.append('description', description);
     form_data.append('author', author);
-    
-    fetch('/api/blogs/', {
-      method: 'PUT',
+
+    if(image !== null) {
+      form_data.append('image', image)
+    }
+
+    await axios(`/api/blogs/${id}` ,{
       headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`
-    },
-      body: form_data
-    }).then(res => {
-              console.log(res.data);
-            })
-    .catch(err => console.log(err));
-    history.go(-1)
+        Authorization: `JWT ${localStorage.getItem('token')}`
+      },
+      data: form_data
+    }).then(response => {
+        console.log(response.data);
+        history.push("/");
+    })
   }
 
   return (
     <div className="create">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={updateBlog}>
         <table>
           <tr>
             <td>
@@ -64,7 +74,7 @@ const Edit = ({isLoggedIn, blogsData}) => {
             <div class="upload-btn-wrapper">
               <button class="btn">Upload Image</button>
               <input 
-                  type="file" name="myfile"  accept="image/*"
+                  type="file" 
                   onChange={(e) => {
                     setImage(e.target.files[0]);
                     setImageUrl(URL.createObjectURL(e.target.files[0]));
@@ -83,7 +93,7 @@ const Edit = ({isLoggedIn, blogsData}) => {
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
               {imageUrl!=null && <img src={imageUrl}/>}
-        <button type="submit">Update</button>
+        <button>Update</button>
       </form>
     </div>
   );
